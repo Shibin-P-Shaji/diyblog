@@ -104,6 +104,40 @@
             box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
         }
 
+        /* Profile Picture Styles */
+        .profile-icon {
+            width: 32px !important;
+            height: 32px !important;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        .author-avatar {
+            flex-shrink: 0;
+            width: 32px !important;
+            height: 32px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            overflow: hidden;
+            background: var(--background-light);
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-avatar i.fas.fa-user-circle {
+            font-size: 32px;
+            color: var(--text-secondary);
+            display: block;
+        }
+
         /* Alert Styles */
         .alert {
             border: 1px solid var(--border-color);
@@ -281,7 +315,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
                             {% if user.author.profile_picture %}
-                                <img src="{{ user.author.profile_picture.url }}" alt="{{ user.username }}" class="nav-profile-img me-2">
+                                <img src="{{ user.author.profile_picture.url }}" alt="{{ user.username }}" class="profile-icon me-2">
                             {% else %}
                                 <i class="fas fa-user-circle fa-2x me-2" style="color: var(--primary-color);"></i>
                             {% endif %}
