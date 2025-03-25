@@ -1,0 +1,383 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DIY Blog{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #ffffff;
+            --text-primary: #000000;
+            --text-secondary: #333333;
+            --background-white: #ffffff;
+            --background-light: #f8f9fa;
+            --border-color: #000000;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(45deg, #000000, #333333);
+            --gradient-hover: linear-gradient(45deg, #333333, #000000);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-white);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: var(--background-white);
+            box-shadow: 0 2px 10px var(--shadow-color);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-link:hover {
+            color: var(--text-secondary);
+        }
+
+        .nav-link.active {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--text-secondary);
+            border-color: var(--text-secondary);
+            color: var(--secondary-color);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        /* Card Styles */
+        .card {
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .card-header {
+            background-color: var(--background-white);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Form Styles */
+        .form-control {
+            border-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
+        }
+
+        /* Alert Styles */
+        .alert {
+            border: 1px solid var(--border-color);
+        }
+
+        .alert-success {
+            background-color: var(--background-white);
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+
+        .alert-danger {
+            background-color: var(--background-white);
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+
+        /* Badge Styles */
+        .badge {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--background-white);
+            color: var(--text-primary);
+            padding: 2rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Link Styles */
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--text-secondary);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--background-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
+        /* Loading Spinner */
+        .spinner-border {
+            color: var(--primary-color);
+        }
+
+        /* Toast Notifications */
+        .toast {
+            background-color: var(--background-white);
+            border: 1px solid var(--border-color);
+        }
+
+        .toast-header {
+            background-color: var(--background-white);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            background-color: var(--background-white);
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Table Styles */
+        .table {
+            color: var(--text-primary);
+        }
+
+        .table thead th {
+            background-color: var(--background-light);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .table td, .table th {
+            border-color: var(--border-color);
+        }
+
+        /* Pagination Styles */
+        .pagination .page-link {
+            color: var(--primary-color);
+            border-color: var(--border-color);
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        /* Custom Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+
+            .nav-link {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'app:index' %}">
+                <i class="fas fa-tools me-2"></i>DIY Blog
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="{% url 'app:index' %}">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'blog-list' %}active{% endif %}" href="{% url 'app:blog-list' %}">
+                            <i class="fas fa-newspaper me-1"></i>Blogs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'author-list' %}active{% endif %}" href="{% url 'app:author-list' %}">
+                            <i class="fas fa-users me-1"></i>Authors
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'blog-create' %}active{% endif %}" href="{% url 'app:blog-create' %}">
+                            <i class="fas fa-plus-circle me-1"></i>Create Post
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            {% if user.author.profile_picture %}
+                                <img src="{{ user.author.profile_picture.url }}" alt="{{ user.username }}" class="nav-profile-img me-2">
+                            {% else %}
+                                <i class="fas fa-user-circle fa-2x me-2" style="color: var(--primary-color);"></i>
+                            {% endif %}
+                            {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'app:author-dashboard' %}">
+                                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'app:profile-update' %}">
+                                    <i class="fas fa-user-edit me-2"></i>Profile
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'logout' %}">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}" href="{% url 'login' %}">
+                            <i class="fas fa-sign-in-alt me-1"></i>Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'register' %}active{% endif %}" href="{% url 'app:register' %}">
+                            <i class="fas fa-user-plus me-1"></i>Register
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="{% url 'app:index' %}">Home</a>
+                    <a href="{% url 'app:blog-list' %}">Blogs</a>
+                    <a href="{% url 'app:author-list' %}">Authors</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p class="mb-0">&copy; {% now "Y" %} DIY Blog. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const navbar = document.querySelector('.navbar');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    });
+    </script>
+</body>
+</html> 
